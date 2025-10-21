@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
-import "./Header.css";
+import { useEffect, useRef, useState } from "react";
 import Icon from "../../components/common/Icon/Icon";
-import Navigation from "../Navigation/Navigation";
 import { useTheme } from "../../context/ThemeContext";
+import { useCart } from "../../context/CartContext";
+import Navigation from "../Navigation/Navigation";
+import "./Header.css";
 
 export default function Header() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  //const [isDarkMode, setIsDarkMode] = useState(false);
-  const{theme, isDarkMode, toggleTheme, setTheme} = useTheme ();
+  const { theme, isDarkMode, toggleTheme, } = useTheme();
+  const {getTotalItems} = useCart();
+  const totalItems = getTotalItems();
 
   // Simular estado de autenticación - reemplazar con tu lógica real
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -81,13 +83,13 @@ export default function Header() {
     }
   };
 
-  /*const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.setAttribute(
-      "data-theme",
-      isDarkMode ? "light" : "dark"
-    );
-  };*/
+  // const toggleTheme = () => {
+  //   setIsDarkMode(!isDarkMode);
+  //   document.documentElement.setAttribute(
+  //     "data-theme",
+  //     isDarkMode ? "light" : "dark"
+  //   );
+  // };
 
   const handleLogin = () => {
     console.log("Redirigir a login");
@@ -340,14 +342,15 @@ export default function Header() {
                 aria-label="Ver carrito de compras"
               >
                 <Icon name="shoppingCart" size={24} />
-                <span className="cart-badge">2</span>
+                <span className="cart-badge">{totalItems}</span>
               </a>
 
               {/* Desktop Theme Toggle */}
               <button
                 className="theme-btn desktop-only"
-                aria-label="Cambiar tema"
                 onClick={toggleTheme}
+                aria-pressed={isDarkMode}
+                aria-label="Cambiar tema"
               >
                 <Icon name={isDarkMode ? "sun" : "moon"} size={18} />
               </button>

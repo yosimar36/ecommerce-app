@@ -1,8 +1,12 @@
-import Button from "../common/Button";
+import { useCart } from "../../context/CartContext";
 import Badge from "../common/Badge";
+import Button from "../common/Button";
 import "./ProductCard.css";
 
-export default function ProductCard({ product, onAddToCart }) {
+export default function ProductCard({ product }) {
+  const { addToCart } = useCart();
+  const { name, price, stock, imagesUrl, description } = product;
+
   // Validación de props básica
   if (!product) {
     return (
@@ -15,8 +19,6 @@ export default function ProductCard({ product, onAddToCart }) {
     );
   }
 
-  const { name, price, stock, imagesUrl, description } = product;
-
   // Determinar el estado del stock
   const stockBadge =
     stock > 0
@@ -26,9 +28,13 @@ export default function ProductCard({ product, onAddToCart }) {
   // Si hay descuento, agregar badge de descuento (ejemplo)
   const hasDiscount = product.discount && product.discount > 0;
 
+  const handleAddToCart = () => {
+    addToCart(product, 1);
+    console.log(product, "agregado al carrito");
+  };
+
   return (
     <div className="product-card">
-      {console.log(imagesUrl)}
       <img
         src={imagesUrl ? imagesUrl[0] : "/img/products/placeholder.svg"}
         alt={name}
@@ -58,7 +64,12 @@ export default function ProductCard({ product, onAddToCart }) {
           )}
         </div>
 
-        <Button variant="primary" size="sm" disabled={stock === 0}>
+        <Button
+          variant="primary"
+          size="sm"
+          disabled={stock === 0}
+          onClick={handleAddToCart}
+        >
           Agregar al carrito
         </Button>
       </div>
