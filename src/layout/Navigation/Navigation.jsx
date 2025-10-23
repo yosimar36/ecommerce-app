@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import "./Navigation.css";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Icon from "../../components/common/Icon/Icon";
 import categoriesData from "../../data/categories.json";
+import "./Navigation.css";
 
 const Navigation = ({ isMobile = false, onLinkClick }) => {
   const [categories, setCategories] = useState([]);
@@ -25,50 +26,50 @@ const Navigation = ({ isMobile = false, onLinkClick }) => {
     return (
       <div className="mobile-navigation">
         {/* Ofertas especiales */}
-        <a
-          href="/offers"
+        <Link
+          to="/offers"
           className="mobile-nav-link special"
           onClick={onLinkClick}
         >
           <Icon name="tag" size={20} />
           Ofertas del día
-        </a>
-        <a
-          href="/new"
+        </Link>
+        <Link
+          to="/new"
           className="mobile-nav-link special"
           onClick={onLinkClick}
         >
           <Icon name="sparkles" size={20} />
           Novedades
-        </a>
-        <a
-          href="/bestsellers"
+        </Link>
+        <Link
+          to="/bestsellers"
           className="mobile-nav-link special"
           onClick={onLinkClick}
         >
           <Icon name="star" size={20} />
           Más vendidos
-        </a>
-        <a
-          href="/flash-sale"
+        </Link>
+        <Link
+          to="/flash-sale"
           className="mobile-nav-link special"
           onClick={onLinkClick}
         >
           <Icon name="zap" size={20} />
           Flash sale
-        </a>
+        </Link>
 
         {/* Categorías principales */}
         {categories.map((category) => (
-          <a
+          <Link
             key={category._id}
-            href={`/category/${category._id}`}
+            to={`/category/${category._id}`}
             className="mobile-nav-link"
             onClick={onLinkClick}
           >
             <Icon name="chevronRight" size={16} />
             {category.name}
-          </a>
+          </Link>
         ))}
       </div>
     );
@@ -96,26 +97,26 @@ const Navigation = ({ isMobile = false, onLinkClick }) => {
                   const subcategories = getSubcategories(category._id);
                   return (
                     <div key={category._id} className="category-group">
-                      <a
-                        href={`/category/${category._id}`}
+                      <Link
+                        to={`/category/${category._id}`}
                         className="category-link main-category"
                       >
                         {category.name}
                         {subcategories.length > 0 && (
                           <Icon name="chevronRight" size={12} />
                         )}
-                      </a>
+                      </Link>
 
                       {subcategories.length > 0 && (
                         <div className="subcategories">
                           {subcategories.map((subcat) => (
-                            <a
+                            <Link
                               key={subcat._id}
-                              href={`/category/${subcat._id}`}
+                              to={`/category/${subcat._id}`}
                               className="category-link sub-category"
                             >
                               {subcat.name}
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       )}
@@ -128,18 +129,18 @@ const Navigation = ({ isMobile = false, onLinkClick }) => {
 
           {/* Navegación horizontal */}
           <nav className="categories-nav">
-            <a href="/offers" className="nav-link special">
+            <Link to="/offers" className="nav-link special">
               Ofertas del día
-            </a>
-            <a href="/new" className="nav-link special">
+            </Link>
+            <Link to="/new" className="nav-link special">
               Novedades
-            </a>
-            <a href="/bestsellers" className="nav-link special">
+            </Link>
+            <Link to="/bestsellers" className="nav-link special">
               Más vendidos
-            </a>
-            <a href="/flash-sale" className="nav-link special">
+            </Link>
+            <Link to="/flash-sale" className="nav-link special">
               Flash sale
-            </a>
+            </Link>
           </nav>
         </div>
       </div>

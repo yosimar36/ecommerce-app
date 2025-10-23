@@ -6,7 +6,6 @@ import "./Cart.css";
 export default function Cart() {
   const {
     cartItems,
-    addToCart,
     removeFromCart,
     updateQuantity,
     clearCart,

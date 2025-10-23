@@ -1,7 +1,7 @@
-import React from "react";
 import PropTypes from "prop-types";
-import "./Breadcrumb.css";
+import { Link } from "react-router-dom";
 import Icon from "../../components/common/Icon/Icon";
+import "./Breadcrumb.css";
 
 const Breadcrumb = ({ categories = [] }) => {
   if (!categories || categories.length === 0) {
@@ -33,10 +33,10 @@ const Breadcrumb = ({ categories = [] }) => {
       <div className="container">
         <ol className="breadcrumb-list">
           <li className="breadcrumb-item">
-            <a href="/" className="breadcrumb-link">
+            <Link to="/" className="breadcrumb-link">
               <Icon name="home" size={16} />
               <span className="breadcrumb-text">Inicio</span>
-            </a>
+            </Link>
           </li>
 
           {categoryHierarchy.map((category, index) => {
@@ -54,12 +54,12 @@ const Breadcrumb = ({ categories = [] }) => {
                     {category.name}
                   </span>
                 ) : (
-                  <a
+                  <Link
                     href={`/category/${category._id}`}
                     className="breadcrumb-link"
                   >
                     {category.name}
-                  </a>
+                  </Link>
                 )}
               </li>
             );

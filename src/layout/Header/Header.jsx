@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Icon from "../../components/common/Icon/Icon";
-import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../context/CartContext";
+import { useTheme } from "../../context/ThemeContext";
 import Navigation from "../Navigation/Navigation";
 import "./Header.css";
 
@@ -10,17 +11,13 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { theme, isDarkMode, toggleTheme, } = useTheme();
-  const {getTotalItems} = useCart();
+  const { isDarkMode, toggleTheme } = useTheme();
+  const { getTotalItems } = useCart();
   const totalItems = getTotalItems();
 
   // Simular estado de autenticación - reemplazar con tu lógica real
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [user, setUser] = useState({
-    name: "María González",
-    email: "maria@example.com",
-    avatar: null, // URL del avatar o null para usar iniciales
-  });
+  const [user, setUser] = useState(null);
 
   // Referencias para manejo de clicks fuera
   const userMenuRef = useRef(null);
@@ -82,14 +79,6 @@ export default function Header() {
       setIsMobileSearchOpen(false);
     }
   };
-
-  // const toggleTheme = () => {
-  //   setIsDarkMode(!isDarkMode);
-  //   document.documentElement.setAttribute(
-  //     "data-theme",
-  //     isDarkMode ? "light" : "dark"
-  //   );
-  // };
 
   const handleLogin = () => {
     console.log("Redirigir a login");
@@ -185,10 +174,10 @@ export default function Header() {
               <Icon name="menu" size={20} />
             </button>
             {/* Logo */}
-            <a href="/" className="logo">
+            <Link to="/" className="logo">
               eShop
               <span className="logo-extension">.com</span>
-            </a>
+            </Link>
             {/* Desktop Search */}
             <div className="search-container desktop-only">
               <form className="search-form" onSubmit={handleSearch}>
@@ -305,22 +294,22 @@ export default function Header() {
                         </div>
 
                         <div className="user-links">
-                          <a href="/mi-cuenta" className="user-link">
+                          <Link to="/mi-cuenta" className="user-link">
                             <Icon name="user" size={16} />
                             Mi Cuenta
-                          </a>
-                          <a href="/mis-pedidos" className="user-link">
+                          </Link>
+                          <Link to="/mis-pedidos" className="user-link">
                             <Icon name="package" size={16} />
                             Mis Pedidos
-                          </a>
-                          <a href="/lista-deseos" className="user-link">
+                          </Link>
+                          <Link to="/lista-deseos" className="user-link">
                             <Icon name="heart" size={16} />
                             Lista de Deseos
-                          </a>
-                          <a href="/configuracion" className="user-link">
+                          </Link>
+                          <Link to="/configuracion" className="user-link">
                             <Icon name="settings" size={16} />
                             Configuración
-                          </a>
+                          </Link>
                         </div>
 
                         <div className="logout-section">
@@ -336,14 +325,14 @@ export default function Header() {
               </div>
 
               {/* Cart Button */}
-              <a
-                href="/carrito"
+              <Link
+                to="/cart"
                 className="cart-btn"
                 aria-label="Ver carrito de compras"
               >
                 <Icon name="shoppingCart" size={24} />
                 <span className="cart-badge">{totalItems}</span>
-              </a>
+              </Link>
 
               {/* Desktop Theme Toggle */}
               <button
@@ -446,38 +435,38 @@ export default function Header() {
               {isAuthenticated && (
                 <nav className="mobile-main-nav">
                   <h4>Mi Cuenta</h4>
-                  <a
-                    href="/mi-cuenta"
+                  <Link
+                    to="/mi-cuenta"
                     className="mobile-nav-link"
                     onClick={handleMobileMenuClose}
                   >
                     <Icon name="user" size={20} />
                     Mi Perfil
-                  </a>
-                  <a
-                    href="/mis-pedidos"
+                  </Link>
+                  <Link
+                    to="/mis-pedidos"
                     className="mobile-nav-link"
                     onClick={handleMobileMenuClose}
                   >
                     <Icon name="package" size={20} />
                     Mis Pedidos
-                  </a>
-                  <a
-                    href="/lista-deseos"
+                  </Link>
+                  <Link
+                    to="/lista-deseos"
                     className="mobile-nav-link"
                     onClick={handleMobileMenuClose}
                   >
                     <Icon name="heart" size={20} />
                     Lista de Deseos
-                  </a>
-                  <a
-                    href="/configuracion"
+                  </Link>
+                  <Link
+                    to="/configuracion"
                     className="mobile-nav-link"
                     onClick={handleMobileMenuClose}
                   >
                     <Icon name="settings" size={20} />
                     Configuración
-                  </a>
+                  </Link>
                 </nav>
               )}
 
@@ -488,22 +477,22 @@ export default function Header() {
                   <Icon name={isDarkMode ? "sun" : "moon"} size={20} />
                   <span>{isDarkMode ? "Modo Claro" : "Modo Oscuro"}</span>
                 </button>
-                <a
-                  href="/ayuda"
+                <Link
+                  to="/ayuda"
                   className="mobile-nav-link"
                   onClick={handleMobileMenuClose}
                 >
                   <Icon name="helpCircle" size={20} />
                   Centro de Ayuda
-                </a>
-                <a
-                  href="/contacto"
+                </Link>
+                <Link
+                  to="/contacto"
                   className="mobile-nav-link"
                   onClick={handleMobileMenuClose}
                 >
                   <Icon name="messageCircle" size={20} />
                   Contactar Soporte
-                </a>
+                </Link>
               </nav>
 
               {/* Logout */}
