@@ -5,6 +5,7 @@ import { useCart } from "../../context/CartContext";
 import { useTheme } from "../../context/ThemeContext";
 import Navigation from "../Navigation/Navigation";
 import "./Header.css";
+import { getCurrentUser } from "../../utils/auth";
 
 export default function Header() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -17,12 +18,26 @@ export default function Header() {
 
   // Simular estado de autenticación - reemplazar con tu lógica real
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(getCurrentUser);
 
   // Referencias para manejo de clicks fuera
   const userMenuRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const searchInputRef = useRef(null);
+
+  useEffect(()=>{
+    const updateAuthState =()=>{
+      setIsAuthenticated(isAuthenticated());
+      setUser(getCurrentUser());
+    };
+    
+    window.addEventListener("storage", updateAuthState);
+    updateAuthState();
+
+    return () => {
+      window.addEventListener("storage", updateAuthState);
+    };
+  },[]);
 
   // Cerrar menús con Escape y clicks fuera
   useEffect(() => {
