@@ -1,34 +1,32 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../utils/auth";
 import Button from "../components/common/Button";
+import { login } from "../utils/auth";
+import "./Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState (false);
-  const [error,setError] = useState ("");
-  const navigate = useNavigate ();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const  onSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
-    await new Promise(resolve => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 800));
     const result = login(email, password);
 
-    if (result.success){
+    if (result.success) {
       navigate("/");
       window.location.reload();
-    } else{
+    } else {
       setError(result.error);
     }
 
     setLoading(false);
-
-    //TODO: una vez que inicie sesion redirigir al login
-   
   };
 
   return (
@@ -69,12 +67,14 @@ export default function Login() {
           </div>
 
           {error && <div className="error-message">{error}</div>}
-          <Button disabled={loading} type="submit" variant="primary" >
-            {loading ? "Iniciando sesion...." : "Iniciar sesion"}
+
+          <Button disabled={loading} type="submit" variant="primary">
+            {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
           </Button>
         </form>
-        <div className="login-footer"></div>
-        <Link to="/">Volver al inicio</Link>
+        <div className="login-footer">
+          <Link to="/">Volver al inicio</Link>
+        </div>
       </div>
     </div>
   );
